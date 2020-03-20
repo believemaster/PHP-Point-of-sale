@@ -49,12 +49,46 @@ class ControllerUsers
         if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["newName"]) &&
 				preg_match('/^[a-zA-Z0-9]+$/', $_POST["newUser"]) &&
 				preg_match('/^[a-zA-Z0-9]+$/', $_POST["newPasswd"])){
+
+          $table = "users";
+
+          $data = array('name' => $_POST["newName"],
+							  'user' => $_POST["newUser"],
+								'password' => $encryptpass,
+								'profile' => $_POST["newProfile"],
+								'photo' => $photo);
+
+				  $answer = UsersModel::mdlAddUser($table, $data);
+          
+          if ($answer == 'ok') {
+
+						echo '<script>
+
+						swal({
+							type: "success",
+							title: "¡User added succesfully!",
+							showConfirmButton: true,
+							confirmButtonText: "Close"
+
+						}).then(function(result){
+
+							if(result.value){
+
+								window.location = "users";
+							}
+
+						});
+
+						</script>';
+
+				}
+
       } else {
         echo '<script>
-              
+
       					swal({
       						type: "error",
-      						title: "No especial characters or blank fields",
+      						title: "No special characters or blank fields",
       						showConfirmButton: true,
       						confirmButtonText: "Close"
 
@@ -67,7 +101,8 @@ class ControllerUsers
 
       						});
 
-      				</script>';;
+      				</script>';
       }
     }
+}
 }
