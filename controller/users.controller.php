@@ -40,7 +40,34 @@ class ControllerUsers
       }
     }
 
+    /*=============================================
+    	CREATE USER
+    	=============================================*/
+
     static public function ctrCreateUser() {
-      
+      if(isset($_POST["newUser"])) {
+        if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["newName"]) &&
+				preg_match('/^[a-zA-Z0-9]+$/', $_POST["newUser"]) &&
+				preg_match('/^[a-zA-Z0-9]+$/', $_POST["newPasswd"])){
+      } else {
+        echo '<script>
+              
+      					swal({
+      						type: "error",
+      						title: "No especial characters or blank fields",
+      						showConfirmButton: true,
+      						confirmButtonText: "Close"
+
+      						}).then(function(result){
+
+      							if(result.value){
+
+      								window.location = "users";
+      							}
+
+      						});
+
+      				</script>';;
+      }
     }
 }
